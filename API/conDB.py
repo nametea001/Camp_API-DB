@@ -29,7 +29,7 @@ class MyDB:
         mycursor.close()
         mydb.close()
         return data
-    
+
     def getUserbyID2(userID):
         mydb = con()
         mycursor = mydb.cursor(dictionary=True)
@@ -83,19 +83,32 @@ class MyDB:
     def changPassById(ID, password):
         mydb = con()
         mycursor = mydb.cursor(dictionary=True)
-        sql = "UPDATE users SET password = '{}' WHERE id = {}".format(password, ID)
+        sql = "UPDATE users SET password = '{}' WHERE id = {}".format(
+            password, ID)
         mycursor.execute(sql)
         mydb.commit()
         mycursor.close()
         mydb.close()
         return {"error": False}
-    
+
     def changPassByUsername(username, password):
         mydb = con()
         mycursor = mydb.cursor(dictionary=True)
-        sql = "UPDATE users SET password = '{}' WHERE username = '{}'".format(password, username)
+        sql = "UPDATE users SET password = '{}' WHERE username = '{}'".format(
+            password, username)
         mycursor.execute(sql)
         mydb.commit()
         mycursor.close()
         mydb.close()
+        return {"error": False}
+
+    def dleteUser(ID):
+        mydb = con()
+        mycursor = mydb.cursor(dictionary=True)
+        sql = "DELETE FROM users WHERE id = {}".format(ID)
+        mycursor.execute(sql)
+        mydb.commit()
+        mycursor.close()
+        mydb.close()
+        # print(mycursor.rowcount, "record(s) deleted")
         return {"error": False}

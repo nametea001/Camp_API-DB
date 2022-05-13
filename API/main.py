@@ -82,6 +82,11 @@ async def chang_password_by_username(username, password):
     data = ac.changPassByUsername(username, password)
     return data
 
+@app.post("/api/delete_user")
+async def delete_user(UserID):
+    data = ac.DleteUser(UserID)
+    return data
+
 
 if __name__ == "__main__":
     uvicorn.run(app, host="localhost", port=8000)

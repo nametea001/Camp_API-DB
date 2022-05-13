@@ -42,6 +42,10 @@ class Action:
         else:
             return {"error": True}
     
+    def dleteUser(ID):
+        data = db.dleteUser(ID)
+        return data
+    
     def changPassByUsername(username, password):
         data = db.changPassByUsername(username, password)
         if(data['error'] == False ):
