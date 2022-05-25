@@ -1,3 +1,4 @@
+from distutils.log import error
 from re import X
 from fastapi import FastAPI
 import uvicorn
@@ -19,14 +20,10 @@ class User(BaseModel):
     address: Optional[str]
 
 
-class User2(BaseModel):
-    username: Optional[str]
-    password: Optional[str]
-
-
 # ------------- routh ---------
+# ----------------- users ------------------
 @app.post("/api/login")
-def login(user: User2):
+def login(user: User):
     data = ac.login(user)
     return data
 
@@ -34,12 +31,19 @@ def login(user: User2):
 @app.get("/")
 async def api_con():
     con = {"Start": "Success"}
-    return con
+    error = []
+    error.append(con)
+    error.append({"error": False})
+    return error
+
 
 @app.get("/con")
 async def api_con():
     con = {"Con": "Success"}
-    return con
+    error = []
+    error.append(con)
+    error.append({"error": False})
+    return error
 
 
 @app.get("/api/user_all")
@@ -48,11 +52,11 @@ async def user_all():
     return data
 
 
-
 @app.get("/api/user_by_id")
 async def get_user_id(userID):
     data = ac.getUserbyID(userID)
     return data
+
 
 @app.get("/api/user_by_id_2")
 async def get_user_id_2(userID):
@@ -77,14 +81,61 @@ async def chang_password_by_id(ID, password):
     data = ac.changPassById(ID, password)
     return data
 
+
 @app.post("/api/chang_password_by_username")
 async def chang_password_by_username(username, password):
     data = ac.changPassByUsername(username, password)
     return data
 
+
 @app.post("/api/delete_user")
-async def delete_user(UserID):
-    data = ac.DleteUser(UserID)
+async def delete_user(user: User):
+    data = ac.dleteUser(user)
+    return data
+
+
+@app.post("/api/delete_user_by_user_name")
+async def delete_user_by_user_name(user: User):
+    data = ac.dleteUserbyUsername(user)
+    return data
+
+
+# --------------- HW ------------------
+
+
+@app.get("/hw")
+async def hw():
+    data = ac.getHW()
+    return data
+
+
+@app.get("/hw/get_by_id")
+async def hw_get_by_id(ID):
+    data = ac.getHWByID(ID)
+    return data
+
+
+@app.get("/hw/get_by_name")
+async def hw_get_by_name(name):
+    data = ac.getHWByName(name)
+    return data
+
+
+@app.get("/hw/add_hw")
+async def add_hw(name, hw_name, status, value):
+    data = ac.addHW(name, hw_name, status, value)
+    return data
+
+
+@app.get("/hw/update_status")
+async def update_status(name, status):
+    data = ac.updateStatusHW(name, status)
+    return data
+
+
+@app.get("/hw/update_value")
+async def update_status(name, value):
+    data = ac.updateValueHW(name, value)
     return data
 
 
