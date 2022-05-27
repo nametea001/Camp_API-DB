@@ -8,11 +8,12 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
 
-namespace TestCallAPI
+namespace WindowsFormsApp1
 {
+    //version 2.0.0 fixbug timeout
     public class NetworkHelper
     {
-        private string host = "http://localhost:8000/";
+        private string host = "http://18.141.11.24";
         public List<Dictionary<string, string>> getData(string url)
         {
             List<Dictionary<string, string>> data = getMethod(url).Result;
@@ -27,7 +28,7 @@ namespace TestCallAPI
                 client.BaseAddress = new Uri(host);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                HttpResponseMessage response = await client.GetAsync(url);
+                HttpResponseMessage response = await client.GetAsync(url).ConfigureAwait(false);
                 response.EnsureSuccessStatusCode();
                 string responseBody = await response.Content.ReadAsStringAsync();
                 // Above three lines can be replaced with new helper method below
@@ -66,7 +67,7 @@ namespace TestCallAPI
 
                     var response = await client.PostAsync(url, dataJson);
                     response.EnsureSuccessStatusCode();
-                    string responseBody = await response.Content.ReadAsStringAsync();
+                    string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                     var data = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(responseBody);
                     return data;
