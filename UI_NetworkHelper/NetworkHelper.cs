@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace WindowsFormsApp1
 {
-    //version 2.0.0 fixbug timeout
+    //version 2.0.1 fixbug timeout
     public class NetworkHelper
     {
         private string host = "http://18.141.11.24";
@@ -65,9 +65,9 @@ namespace WindowsFormsApp1
                     var json = JsonConvert.SerializeObject(ob);
                     var dataJson = new StringContent(json, Encoding.UTF8, "application/json");
 
-                    var response = await client.PostAsync(url, dataJson);
+                    var response = await client.PostAsync(url, dataJson).ConfigureAwait(false);
                     response.EnsureSuccessStatusCode();
-                    string responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    string responseBody = await response.Content.ReadAsStringAsync();
 
                     var data = JsonConvert.DeserializeObject<List<Dictionary<string, string>>>(responseBody);
                     return data;
