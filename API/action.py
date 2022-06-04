@@ -80,11 +80,11 @@ class Action:
         return data
     
     def updateStatusHW(name, status):
-        error = db.addHW(name,status)
+        error = db.updateStatusHW(name,status)
         data = db.getHWByName(name)
         return data
     
     def updateValueHW(name, value):
         error = db.addHW(name,value)
-        data = db.getHWByName(name)
+        data = db.updateValueHW(name)
         return data

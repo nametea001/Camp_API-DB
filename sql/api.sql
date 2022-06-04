@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 25, 2022 at 05:25 PM
+-- Generation Time: Jun 04, 2022 at 07:47 AM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.6
 
@@ -34,6 +34,13 @@ CREATE TABLE `hw` (
   `status` enum('ON','OFF') NOT NULL DEFAULT 'OFF',
   `value` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `hw`
+--
+
+INSERT INTO `hw` (`id`, `name`, `hw_name`, `status`, `value`) VALUES
+(0, 'test', 'wif_test', 'ON', 0);
 
 -- --------------------------------------------------------
 
