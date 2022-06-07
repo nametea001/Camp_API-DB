@@ -1,5 +1,3 @@
-from distutils.log import error
-from re import X
 from fastapi import FastAPI
 import uvicorn
 
@@ -121,6 +119,12 @@ async def hw_get_by_name(name):
     return data
 
 
+@app.get("/hw/get_by_name_and_hw_name")
+async def hw_get_by_name(name, hw_name):
+    data = ac.getHWByNameAndHWName(name, hw_name)
+    return data
+
+
 @app.get("/hw/add_hw")
 async def add_hw(name, hw_name, status, value):
     data = ac.addHW(name, hw_name, status, value)
@@ -128,16 +132,27 @@ async def add_hw(name, hw_name, status, value):
 
 
 @app.get("/hw/update_status")
-async def update_status(name, status):
-    data = ac.updateStatusHW(name, status)
+async def update_status(ID, status):
+    data = ac.updateStatusHW(ID, status)
     return data
 
 
 @app.get("/hw/update_value")
-async def update_status(name, value):
-    data = ac.updateValueHW(name, value)
+async def update_value(ID, value):
+    data = ac.updateValueHW(ID, value)
     return data
 
+
+@app.get("/hw/update_status_value")
+async def update_status_value(ID, status, value):
+    data = ac.updateStatusAndValueHW(ID, status, value)
+    return data
+
+
+@app.get("/hw/delete")
+async def hw_delete(ID):
+    data = ac.udeleteHW(ID)
+    return data
 
 if __name__ == "__main__":
     uvicorn.run(app, host="localhost", port=8000)

@@ -1,6 +1,7 @@
 from machine import UART, Pin
 from NetworkHelper import NetworkHelper
-import time, sys
+import time
+import sys
 
 
 def wifi():
@@ -21,11 +22,11 @@ def wifi():
     """
     Connect with the WiFi
     """
-    ssid = "Sirichai" #wifi name
-    pwd = "0903319646" # password
+    ssid = "Sirichai"  # wifi name
+    pwd = "0903319646"  # password
     print("Try to connect with the WiFi..")
     timeout = 0
-    # default delay wifi delay 5 sec
+    # default delay wifi delay 2 sec
     while timeout < 6:
         if "WIFI CONNECTED" in con.connectWiFi(ssid, pwd):
             print("ESP8266 connect with the WiFi..")
@@ -33,12 +34,15 @@ def wifi():
             break
         else:
             print(".")
+            wifimode = con.getCurrentWiFiMode()
+            if(wifimode != "STA"):
+                con.setCurrentWiFiMode(mode=1)
             timeout += 1
-            time.sleep(1)
+            time.sleep(0.5)
     if timeout >= 6:
         print("Timeout connect with the WiFi")
         return False
 
+
 con = NetworkHelper()
 wifiCon = wifi()
-

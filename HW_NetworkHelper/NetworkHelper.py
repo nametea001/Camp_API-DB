@@ -350,7 +350,7 @@ class NetworkHelper:
         else:
             return None
 
-    def connectWiFi(self, ssid, pwd, delay=5):
+    def connectWiFi(self, ssid, pwd, delay=2):
         """
         This fucntion use to connect ESP8266 with a WiFi AccessPoins
 
@@ -443,7 +443,7 @@ class NetworkHelper:
         else:
             False
 
-    def doHttpGet(self, host, path, delay=3):
+    def doHttpGet(self, host, path, delay=4):
         """
         This fucntion use to complete a HTTP Get operation
 

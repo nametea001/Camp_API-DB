@@ -65,7 +65,7 @@ class Action:
     def getHW():
         data = db.getHW()
         return data
-    
+
     def getHWByID(ID):
         data = db.getHWByID(ID)
         return data
@@ -74,17 +74,30 @@ class Action:
         data = db.getHWByName(name)
         return data
 
+    def getHWByNameAndHWName(name, hw_name):
+        data = db.getHWByNameAndHWName(name, hw_name)
+        return data
+
     def addHW(name, hw_name, status, value):
         ID = db.addHW(name, hw_name, status, value)
         data = db.getHWByID(ID)
         return data
-    
-    def updateStatusHW(name, status):
-        error = db.updateStatusHW(name,status)
-        data = db.getHWByName(name)
+
+    def updateStatusHW(ID, status):
+        error = db.updateStatusHW(ID, status)
+        data = db.getHWByID(ID)
         return data
-    
-    def updateValueHW(name, value):
-        error = db.addHW(name,value)
-        data = db.updateValueHW(name)
+
+    def updateValueHW(ID, value):
+        error = db.updateValueHW(ID, value)
+        data = db.getHWByID(ID)
+        return data
+
+    def updateStatusAndValueHW(ID, status, value):
+        error = db.updateStatusAndValueHW(ID, status, value)
+        data = db.getHWByName(ID)
+        return data
+
+    def udeleteHW(ID):
+        data = db.deleteHW(ID)
         return data

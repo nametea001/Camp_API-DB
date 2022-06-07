@@ -1,6 +1,7 @@
 from machine import UART, Pin
 from NetworkHelper import NetworkHelper
-import time, sys
+import time
+import sys
 
 
 def wifi():
@@ -21,11 +22,11 @@ def wifi():
     """
     Connect with the WiFi
     """
-    ssid = "Sirichai" #wifi name
-    pwd = "0903319646" # password
+    ssid = "Sirichai"  # wifi name
+    pwd = "0903319646"  # password
     print("Try to connect with the WiFi..")
     timeout = 0
-    # default delay wifi delay 5 sec
+    # default delay wifi delay 2 sec
     while timeout < 6:
         if "WIFI CONNECTED" in con.connectWiFi(ssid, pwd):
             print("ESP8266 connect with the WiFi..")
@@ -33,23 +34,27 @@ def wifi():
             break
         else:
             print(".")
+            wifimode = con.getCurrentWiFiMode()
+            if(wifimode != "STA"):
+                con.setCurrentWiFiMode(mode=1)
             timeout += 1
-            time.sleep(1)
+            time.sleep(0.5)
     if timeout >= 6:
         print("Timeout connect with the WiFi")
         return False
 
 
-def getApi():
+
+def getApi(host, path, param=""):
     print("\r\n\r\n")
     print("Now it's time to start HTTP Get/Post Operation.......\r\n")
-    host = "192.168.1.2" # host
-    basepath = "/" #path  ?? url
-    param = ""
+    # host = "192.168.1.2"  # host
+    # path = "/"  # path  ?? url
+    #param = ""
     if param != "":
-        path = basepath + "?" + param
+        path = path + "?" + param
     else:
-        path = basepath
+        path = path
     timeout = 0
     # default delay get api delay 3 sec
     while timeout < 3:
@@ -71,7 +76,7 @@ def getApi():
             print("Get data fail...")
             print("Please wait to try again....\r\n")
             timeout += 1
-            time.sleep(1)
+            time.sleep(0.5)
         if timeout >= 3:
             return False
 
@@ -79,8 +84,16 @@ def getApi():
 con = NetworkHelper()
 wifiCon = wifi()
 
+host = "192.168.1.2"  # host
+path = "/"  # path  ?? url
+param = ""
+
 if (wifiCon):
-    data = getApi()
-    if(data):
-        for i in data:
-            print(i)
+    while(True):
+        data = getApi(host, path, param)
+        if(data):
+            for i in data:
+                print(i)
+            break
+    time.sleep(1)
+        

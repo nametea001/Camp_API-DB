@@ -86,7 +86,8 @@ class MyDB:
     def changPassById(ID, password):
         mydb = con()
         mycursor = mydb.cursor(dictionary=True)
-        sql = "UPDATE users SET password = '{}' WHERE id = {}".format(password, ID)
+        sql = "UPDATE users SET password = '{}' WHERE id = {}".format(
+            password, ID)
         mycursor.execute(sql)
         mydb.commit()
         mycursor.close()
@@ -159,7 +160,18 @@ class MyDB:
     def getHWByName(name):
         mydb = con()
         mycursor = mydb.cursor(dictionary=True)
-        sql = "SELECT * FROM hw WHERE name = '{}' OR hw_name = '{}' ".format(name, name)
+        sql = "SELECT * FROM hw WHERE name = '{}'".format(name)
+        mycursor.execute(sql)
+        data = mycursor.fetchall()
+        mycursor.close()
+        mydb.close()
+        return data
+
+    def getHWByNameAndHWName(name, hw_name):
+        mydb = con()
+        mycursor = mydb.cursor(dictionary=True)
+        sql = "SELECT * FROM hw WHERE name = '{}' AND hw_name = '{}' ".format(
+            name, hw_name)
         mycursor.execute(sql)
         data = mycursor.fetchall()
         mycursor.close()
@@ -179,10 +191,10 @@ class MyDB:
         mydb.close()
         return ID
 
-    def updateStatusHW(name, status):
+    def updateStatusHW(ID, status):
         mydb = con()
         mycursor = mydb.cursor(dictionary=True)
-        sql = "UPDATE hw SET status = '{}' WHERE name = '{}'".format(status, name)
+        sql = "UPDATE hw SET status = '{}' WHERE id = {}".format(status, ID)
         mycursor.execute(sql)
         mydb.commit()
         mycursor.close()
@@ -190,11 +202,36 @@ class MyDB:
         error = []
         error.append({"error": False})
         return error
-    
-    def updateValueHW(name, value):
+
+    def updateValueHW(ID, value):
         mydb = con()
         mycursor = mydb.cursor(dictionary=True)
-        sql = "UPDATE hw SET value = '{}' WHERE name = '{}'".format(value, name)
+        sql = "UPDATE hw SET value = '{}' WHERE id = {}".format(value, ID)
+        mycursor.execute(sql)
+        mydb.commit()
+        mycursor.close()
+        mydb.close()
+        error = []
+        error.append({"error": False})
+        return error
+
+    def updateStatusAndValueHW(ID, status, value):
+        mydb = con()
+        mycursor = mydb.cursor(dictionary=True)
+        sql = "UPDATE hw SET status = '{}', value = '{}' WHERE id = {}".format(
+            status, value, ID)
+        mycursor.execute(sql)
+        mydb.commit()
+        mycursor.close()
+        mydb.close()
+        error = []
+        error.append({"error": False})
+        return error
+
+    def deleteHW(ID):
+        mydb = con()
+        mycursor = mydb.cursor(dictionary=True)
+        sql = "DELETE FROM hw WHERE id = {}".format(ID)
         mycursor.execute(sql)
         mydb.commit()
         mycursor.close()
