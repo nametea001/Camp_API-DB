@@ -71,6 +71,23 @@ class MyDB:
         mydb.close()
         return ID
 
+    def addUser2(user):
+        mydb = con()
+        mycursor = mydb.cursor(dictionary=True)
+        sql = "INSERT INTO users (username, password, name, last_name, address, user_role_id) VALUES ('{}', '{}', '{}', '{}', '{}', 2)".format(
+            user.username,
+            user.password,
+            user.name,
+            user.last_name,
+            user.address,
+        )
+        mycursor.execute(sql)
+        mydb.commit()
+        ID = mycursor.lastrowid
+        mycursor.close()
+        mydb.close()
+        return ID
+
     def login(user):
         mydb = con()
         mycursor = mydb.cursor(dictionary=True)
@@ -83,11 +100,26 @@ class MyDB:
         mydb.close()
         return data
 
-    def changPassById(ID, password):
+    def changPassById(user):
         mydb = con()
         mycursor = mydb.cursor(dictionary=True)
         sql = "UPDATE users SET password = '{}' WHERE id = {}".format(
-            password, ID)
+            user.password, user.ID
+        )
+        mycursor.execute(sql)
+        mydb.commit()
+        mycursor.close()
+        mydb.close()
+        error = []
+        error.append({"error": False})
+        return error
+
+    def changHistory(user):
+        mydb = con()
+        mycursor = mydb.cursor(dictionary=True)
+        sql = "UPDATE users SET name = '{}', last_name = '{}', address = '{}', WHERE id = {}".format(
+            user.name, user.last_name, user.address, user.ID
+        )
         mycursor.execute(sql)
         mydb.commit()
         mycursor.close()
@@ -171,18 +203,19 @@ class MyDB:
         mydb = con()
         mycursor = mydb.cursor(dictionary=True)
         sql = "SELECT * FROM hw WHERE name = '{}' AND hw_name = '{}' ".format(
-            name, hw_name)
+            name, hw_name
+        )
         mycursor.execute(sql)
         data = mycursor.fetchall()
         mycursor.close()
         mydb.close()
         return data
 
-    def addHW(name, hw_name, status, value):
+    def addHW(name, hw_name):
         mydb = con()
         mycursor = mydb.cursor(dictionary=True)
-        sql = "INSERT INTO hw (name, hw_name, status, value) VALUES ('{}', '{}', '{}', '{}')".format(
-            name, hw_name, status, value
+        sql = "INSERT INTO hw (name, hw_name, status, value) VALUES ('{}', '{}', 'OFF', '0')".format(
+            name, hw_name
         )
         mycursor.execute(sql)
         mydb.commit()
@@ -219,7 +252,8 @@ class MyDB:
         mydb = con()
         mycursor = mydb.cursor(dictionary=True)
         sql = "UPDATE hw SET status = '{}', value = '{}' WHERE id = {}".format(
-            status, value, ID)
+            status, value, ID
+        )
         mycursor.execute(sql)
         mydb.commit()
         mycursor.close()

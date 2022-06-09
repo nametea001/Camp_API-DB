@@ -23,6 +23,25 @@ class Action:
         ID = db.addUser(user)
         data = db.getUserByID(ID)
         return data
+    
+    def addUser2(user):
+        ID = db.addUser2(user)
+        data = db.getUserByID(ID)
+        return data
+
+    def addUser3(user):
+        user = db.getUserByUsername(user.username)
+        if(not user):
+            ID = db.addUser2(user)
+            data = db.getUserByID(ID)
+            return data
+        else:
+            data = {"error":True, "user":"error"}
+
+    def addUser2(user):
+        ID = db.addUser2(user)
+        data = db.getUserByID(ID)
+        return data
 
     def login(user):
 
@@ -34,10 +53,20 @@ class Action:
         # return data
         return getUser
 
-    def changPassById(ID, password):
-        data = db.changPassById(ID, password)
+    def changPassById(user):
+        data = db.changPassById(user)
         if data["error"] == False:
-            getUser = db.getUserByID(ID)
+            getUser = db.getUserByID(user.ID)
+            return getUser
+        else:
+            error = []
+            error.append({"error": False})
+            return error
+
+    def changHistory(user):
+        data = db.changHistory(user)
+        if data["error"] == False:
+            getUser = db.getUserByID(user.ID)
             return getUser
         else:
             error = []
@@ -52,7 +81,9 @@ class Action:
         data = db.dleteUserbyUsername(user)
         return data
 
-    def changPassByUsername(username, password):
+    def changPassByUsername(user):
+        username = user.username
+        password = user.password
         data = db.changPassByUsername(username, password)
         if data["error"] == False:
             getUser = db.getUserByUsername(username)
@@ -78,8 +109,8 @@ class Action:
         data = db.getHWByNameAndHWName(name, hw_name)
         return data
 
-    def addHW(name, hw_name, status, value):
-        ID = db.addHW(name, hw_name, status, value)
+    def addHW(name, hw_name):
+        ID = db.addHW(name, hw_name)
         data = db.getHWByID(ID)
         return data
 
