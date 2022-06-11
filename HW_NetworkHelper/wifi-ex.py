@@ -17,7 +17,13 @@ def wifi():
     esp8266_at_ver = con.getVersion()
     if esp8266_at_ver != None:
         print(esp8266_at_ver)
-    con.setCurrentWiFiMode()
+    print("\r\n\r\n")
+    wifimode = con.getCurrentWiFiMode()
+    print(f"WIFI mode : {wifimode}")
+    if(wifimode != "STA"):
+        con.setCurrentWiFiMode(mode=1)
+        wifimode = con.getCurrentWiFiMode()
+        print(f"WIFI mode : {wifimode}")
     print("\r\n\r\n")
     """
     Connect with the WiFi
@@ -34,15 +40,11 @@ def wifi():
             break
         else:
             print(".")
-            wifimode = con.getCurrentWiFiMode()
-            if(wifimode != "STA"):
-                con.setCurrentWiFiMode(mode=1)
             timeout += 1
             time.sleep(0.5)
     if timeout >= 6:
         print("Timeout connect with the WiFi")
         return False
-
 
 con = NetworkHelper()
 wifiCon = wifi()
