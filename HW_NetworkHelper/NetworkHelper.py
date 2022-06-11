@@ -243,7 +243,7 @@ class NetworkHelper:
             SoftAP+STA if ESP8266's wifi's current mode set pre-config Station & SoftAP
             None failed to detect the wifi's current pre-config mode
         """
-        retData = self._sendToESP8266("AT+CWMODE_CUR?\r\n")
+        retData = self._sendToESP8266("AT+CWMODE?\r\n")
         if retData != None:
             if "1" in retData:
                 return "STA"
@@ -268,10 +268,10 @@ class NetworkHelper:
             False on failed set the current wifi mode
 
         """
-        txData = "AT+CWMODE_CUR=" + str(mode) + "\r\n"
+        txData = "AT+CWMODE=" + str(mode) + "\r\n"
         retData = self._sendToESP8266(txData)
         if retData != None:
-            if ESP8266_OK_STATUS in retData:
+            if ESP8266_OK_STATUS in retData: 
                 return True
             else:
                 return False
