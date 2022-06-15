@@ -18,10 +18,10 @@ public Form1()
                 var data = con.getData(url);
                 if (data != null)
                 {
-                    string x = data[0]["value"].ToString();
-                    temp = x;
-                    label1.Invoke((MethodInvoker)(() => label1.Text = x));
-                    textBox1.Invoke((MethodInvoker)(() => textBox1.Text = x));
+                    string value = data[0]["value"].ToString();
+                    temp = value;
+                    label1.Invoke((MethodInvoker)(() => label1.Text = value));
+                    textBox1.Invoke((MethodInvoker)(() => textBox1.Text = value));
                 }
                 else
                 {
